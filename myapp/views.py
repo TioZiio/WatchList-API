@@ -1,8 +1,8 @@
-from rest_framework import generics
+from rest_framework import viewsets
 from .models import MediaItens
 from .serializers import MediaItensSerializer
 
-class MediaItensList(generics.ListCreateAPIView):
+class MediaItensViewSet(viewsets.ModelViewSet):
 
     queryset = MediaItens.objects.all()
     serializer_class = MediaItensSerializer
