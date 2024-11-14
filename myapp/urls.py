@@ -10,3 +10,4 @@ router.register(r'catalogo', MediaItensViewSet)
 urlpatterns = [
     path('', include(router.urls), name='catalogo'),
 ]
+
