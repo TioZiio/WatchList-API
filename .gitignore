@@ -1,0 +1,44 @@
+# Ignorar diretórios e arquivos específicos
+
+*.ycm_extra_conf.py
+
+# Extras------------------------
+
+	# Ignorar binários
+
+# Binários e Arquivos Executáveis
+
+
+# Script e Configurações
+*.env
+*.swp
+*.pem
+
+# Documentos e Arquivos de Dados
+*.pdf
+*.db
+*db.sqlite3
+
+# Configurações de IDE e Ferramentas
+*.vscode
+
+# Arquivos de Projeto Específico
+*.zip*
+
+# Diretórios Locais
+.local/
+Installation/
+
+	# Diretórios
+
+# Ignorar diretórios de build
+/build/
+out/
+test.*
+teste.*
+venv/
+.git
+
+# Ignorar diretórios de cache
+*__pycache__
+*__init__
