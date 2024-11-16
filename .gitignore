@@ -28,7 +28,6 @@
 # Diretórios Locais
 .local/
 Installation/
-migrations/
 static/
 
 	# Diretórios
