@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class MediaItens(models.Model):
     class Meta:
@@ -11,9 +12,12 @@ class MediaItens(models.Model):
         ('anime', 'Anime'),
     ]
 
-    name = models.CharField(max_length=255)
-    type = models.CharField(max_length=15, choices=MEDIA_TYPES)
-    rating = models.DecimalField(max_digits=3, decimal_places=1)
+    name = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10, choices=MEDIA_TYPES)
+    rating = models.DecimalField(
+        max_digits=3, 
+        decimal_places=1,
+        validators=[MinValueValidator(0), MaxValueValidator(10)])
     
     # Register
     register_date = models.DateField(auto_now_add=True)
@@ -23,5 +27,5 @@ class MediaItens(models.Model):
     update_time = models.TimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} ({self.gender}) - Nota: {self.rating}"
     
