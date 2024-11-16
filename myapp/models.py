@@ -5,6 +5,7 @@ class MediaItens(models.Model):
     class Meta:
         verbose_name = 'Catálogo'
         verbose_name_plural = 'Catálogo'
+        db_table = 'media_itens'
 
     MEDIA_TYPES = [
         ('movie','Movie'),

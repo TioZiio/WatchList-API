@@ -5,15 +5,16 @@
     </head>
     <body>
         <div class="form-container">
-            <h2>Adicionar ao Catálogo</h2>
-            <form id="catalogForm">
+            <form id="mediaForm" method="POST" action="/" onsubmit="handleFormSubmit(event)">
+                {% csrf_token %}
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>
 
-                <label for="gender">Tipo:</label>
-                <select id="gender" name="type" required>
-                    <option value="filme">Filme</option>
-                    <option value="serie">Série</option>
+                <label for="gender">Tipo: (Filme/Série/Anime)</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Selecione...</option>
+                    <option value="movie">Filme</option>
+                    <option value="series">Série</option>
                     <option value="anime">Anime</option>
                 </select>
 
@@ -22,31 +23,38 @@
 
                 <button type="submit">Adicionar</button>
             </form>
-            <p id="message"></p>
-        </div>
+
+        <div id="message"></div>
 
         <script>
-            document.getElementById('catalogForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Evita o recarregamento da página
+            const form = document.getElementById('mediaForm');
+            const formData = new FormData(form);
 
-                // Coleta os dados do formulário
-                const formData = new FormData(this);
-
-                // Envia a requisição AJAX
-                fetch('', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}'  // Token CSRF para segurança
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('message').innerText = data.message;
-                    this.reset();  // Limpa o formulário após enviar
-                })
-                .catch(error => console.error('Erro:', error));
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const messageDiv = document.getElementById('message');
+                if (data.error) {
+                    messageDiv.textContent = data.error;
+                    messageDiv.style.color = 'red';
+                } else {
+                    messageDiv.textContent = data.message;
+                    messageDiv.style.color = 'green';
+                    form.reset();
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
             });
+        }
         </script>
     </body>
 </html>
