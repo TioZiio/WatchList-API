@@ -23,9 +23,6 @@ class MediaItens(models.Model):
     # Register
     register_date = models.DateField(auto_now_add=True)
     register_time = models.TimeField(auto_now_add=True)
-    # Update
-    update_date = models.DateField(auto_now=True)
-    update_time = models.TimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{self.name} ({self.gender}) - Nota: {self.rating}"
