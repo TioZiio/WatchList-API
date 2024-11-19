@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+"""
+Substituir pelo IP correto:
+substituir -> ip
+"""
 
 from pathlib import Path
 
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'watchlist.urls'
@@ -135,3 +141,15 @@ REST_FRAMEWORK = {
     'DATE_FORMAT':'%d-%m-%Y',
     'TIME_FORMAT':'%H:%M:%S',
 }
+
+# Cors - Permissão de methodos e pages
+CORS_ALLOWED_ORIGIN = [
+    'http://ip', 'https://ip',
+]
+CORS_ALLOW_METHODS = [
+    'POST', 'GET', 'OPTIONS'
+]
+CSRF_TRUSTED_ORIGINS = [
+    'http://ip', 'https://ip',
+]
+
