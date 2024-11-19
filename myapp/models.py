@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from decimal import Decimal
 
 class MediaItens(models.Model):
     class Meta:
@@ -18,7 +19,8 @@ class MediaItens(models.Model):
     rating = models.DecimalField(
         max_digits=3, 
         decimal_places=1,
-        validators=[MinValueValidator(0), MaxValueValidator(10)])
+        validators=[MinValueValidator(Decimal('0.0')),
+                    MaxValueValidator(Decimal('10.0'))])
     
     # Register
     register_date = models.DateField(auto_now_add=True)
