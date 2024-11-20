@@ -9,28 +9,29 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-"""
-Substituir pelo IP correto:
-substituir -> ip
-"""
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@i=l4(yn$o(xaobdrbht^=z0ge441c39t@f2s^p4i94%8ut-&m'
+# DOTENV
+load_dotenv(BASE_DIR.parent / 'dotenv_files' / '.env', override=True)
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@i=l4(yn$o(xaobdrbht^=z0ge441c39t@f2s^p4i94%8ut-&m')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    h.strip() for h in os.getenv('ALLOWED_HOSTS', '').split(',')
+    if h.strip()
+]
 
 # Application definition
 
@@ -80,6 +81,17 @@ WSGI_APPLICATION = 'watchlist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+# Caso use o PostgreSQL:
+#DATABASES = {
+#    'default': {
+#        'ENGINE': os.environ.get("DB_ENGINE"),
+#        'NAME': os.environ.get("DB_NAME"),
+#        'HOST': os.environ.get("DB_HOST"),
+#        'USER': os.environ.get("DB_USER"),
+#        'PASSWORD': os.environ.get("DB_PASSWORD"),
+#    }
+#}
 
 DATABASES = {
     'default': {
@@ -144,12 +156,14 @@ REST_FRAMEWORK = {
 
 # Cors - Permissão de methodos e pages
 CORS_ALLOWED_ORIGIN = [
-    'http://ip', 'https://ip',
+    f"http://{os.getenv('IP_HOST','CHANGE-ME')}",
+    f"https://{os.getenv('IP_HOST','CHANGE-ME')}",
 ]
 CORS_ALLOW_METHODS = [
     'POST', 'GET', 'OPTIONS'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'http://ip', 'https://ip',
+    f"http://{os.getenv('IP_HOST','CHANGE-ME')}",
+    f"https://{os.getenv('IP_HOST','CHANGE-ME')}",
 ]
 

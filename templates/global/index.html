@@ -7,10 +7,10 @@
         <div class="form-container">
             <form id="mediaForm" method="POST" action="/" onsubmit="handleFormSubmit(event)">
                 {% csrf_token %}
-                <label for="name">Nome:</label>
+                <label for="name">Nome do (Filme/Série/Anime):</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>
 
-                <label for="gender">Tipo: (Filme/Série/Anime)</label>
+                <label for="gender">Tipo:</label>
                 <select id="gender" name="gender" required>
                     <option value="">Selecione...</option>
                     <option value="movie">Filme</option>
