@@ -1,0 +1,13 @@
+# O IP Host consiste no IP público, deve ser substituido
+IP_HOST='ip'
+
+# Comando para criar SECRET_KEY: 
+# python3 -c "import string as s;from secrets import SystemRandom as SR;print(''.join(SR().choices(s.ascii_letters + s.digits + s.punctuation, k=64)));"
+SECRET_KEY="CHANGE-ME"
+ALLOWED_HOSTS="127.0.0.1, localhost"
+
+DB_ENGINE=django.db.backends.postgresql
+DB_HOST="CHANGE-ME"
+DB_NAME="CHANGE-ME"
+DB_USER="CHANGE-ME"
+DB_PASSWORD="CHANGE-ME"

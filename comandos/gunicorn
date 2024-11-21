@@ -1,0 +1,58 @@
+###############################################################################
+# Replace
+# watchlist the name of the gunicorn file you want
+# ubuntu your user name
+# WatchList-API the folder name of your project
+# watchlist the folder name where you find a file called wsgi.py
+#
+###############################################################################
+# Criando o arquivo watchlist.socket
+sudo nano /etc/systemd/system/watchlist.socket
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=gunicorn watchlist socket
+
+[Socket]
+ListenStream=/run/watchlist.socket
+
+[Install]
+WantedBy=sockets.target
+
+###############################################################################
+# Criando o arquivo watchlist.service
+sudo nano /etc/systemd/system/watchlist.service
+
+###############################################################################
+# Conteúdo do arquivo
+[Unit]
+Description=Gunicorn daemon (You can change if you want)
+Requires=watchlist.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+Restart=on-failure
+# EnvironmentFile=/home/ubuntu/WatchList-API/.env
+WorkingDirectory=/home/ubuntu/WatchList-API
+# --error-logfile --enable-stdio-inheritance --log-level and --capture-output
+# are all for debugging purposes.
+ExecStart=/home/ubuntu/WatchList-API/venv/bin/gunicorn \
+          --error-logfile /home/ubuntu/WatchList-API/gunicorn-error-log \
+          --enable-stdio-inheritance \
+          --log-level "debug" \
+          --capture-output \
+          --access-logfile - \
+          --workers 6 \
+          --bind unix:/run/watchlist.socket \
+          watchlist.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+###############################################################################
+# Ativando
+sudo systemctl start watchlist.socket
+sudo systemctl enable watchlist.socket
